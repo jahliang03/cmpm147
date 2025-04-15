@@ -19,6 +19,7 @@ class MyProjectClass {
   // define a method
   myMethod() {
     // code to run when method is called
+    
   }
 }
 

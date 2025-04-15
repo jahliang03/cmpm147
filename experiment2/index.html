@@ -1,70 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Subject/Topic</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experiment 2 - Living Impressions</title>
 
-	<!-- Use UTF character set, a good idea with any webpage -->
-	<meta charset="UTF-8" />
-	<!-- Set viewport so page remains consistently scaled w narrow devices -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/site.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fefefe;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: #333;
+    }
 
-	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
-	<link rel="stylesheet" type="text/css" href="../css/site.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+    h1 {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 2rem;
+    }
 
-	<!-- Load jQuery library -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>
-	<!-- Load p5.js library -->
-	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+    .minor-section {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #f8f9fa;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    }
 
-	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
-    <script type="text/javascript" src="../js/site.js" DEFER></script>
-	<!-- Use me for a JavaScript OOP Project -->
-	<script type="text/javascript" src="./js/project.js" DEFER></script>
-	<!-- Use me for a p5.js project -->
-	<script type="text/javascript" src="./js/sketch.js" DEFER></script>
+    h2 {
+      font-family: Georgia, serif;
+      font-size: 1.5rem;
+      color: #222;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #444;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    .visual-section {
+      max-width: 1000px;
+      margin: 1rem auto;
+      padding: 1.5rem;
+      background: #f0f8ff;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .visual-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    #canvas-container {
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      padding: 8px;
+	  height: fit-content; 
+      width: fit-content;
+    }
+
+    .my-photo {
+      width: 400px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #ccc;
+    }
+
+    #fullscreen {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    #fullscreen:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+  <script src="../js/site.js" defer></script>
+  <script src="./js/sketch.js" defer></script>
 </head>
+
 <body>
-	<!-- Style this page by changing the CSS in ../css/site.css or css/experiment.css -->
-	<main id="content">
-		<section>
+  <main id="content">
+    <h1><b>Experiment 2 - Living Impressions</b></h1>
 
-			<h1>Experiment X - Subject/Topic</h1>
+    <!-- Visual Section (Canvas + Photo Side by Side) -->
+    <section class="visual-section">
+      <h2>Visual Comparison</h2>
+      <div class="visual-row">
+        <div id="canvas-container"></div>
+        <img class="my-photo" src="/img/carmelBeach.png" alt="Carmel Beach Photo" />
+      </div>
+      <div style="text-align: center;">
+        <button id="fullscreen">Fullscreen</button>
+      </div>
+    </section>
 
-			<div class="minor-section">
-				<div id="canvas-container">
-					<!-- canvas will be added here -->
-				</div>
-                <div class="fullscreen-box">
-                    <button id="fullscreen">Fullscreen</button>
-                </div>
-			</div>
+    <!-- Description -->
+    <div class="minor-section">
+      <h2>Description</h2>
+      <p>In this experiment I'm trying to recreate a photo I took at Carmel Beach. I'm trying to recreate the peaceful scenery I witnessed that day procedurally. I used procedural animation to recreate the waves and the clouds moving to make the tranquil, generative beach scene feel alive and peaceful. My goal was to simulate a natural environment with dynamic elements like drifting clouds, rising sun, moving waves, and layered mountains with p5.js. This project explores how small changes in randomness and timing can create an immersive visual impression that evolves over time.</p>
+    </div>
 
-			<div class="minor-section">
-				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
-			</div>
+    <!-- Technical -->
+    <div class="minor-section">
+      <h2>Technical</h2>
+      <p>For this experiment, I used procedural animation methods to make my sunset beach scene feel alive. The sketch includes animated clouds in three different layers, a rising sun, mountains, sand, and an ocean with waves. Each time the "reimagine" button is pressed, it randomizes the scene and resets the sun's position using <code>millis()</code>. I used <code>random()</code> and a seed to generate the mountain shapes and cloud positions, and <code>sin()</code> to animate the wave movement. I also layered different wave colors and cloud colors to give it more depth and a soft, dreamy feel. The impression runs in real time and feels as though you're watching a sunset from a distance.</p>
+    </div>
 
-			<div class="minor-section">
-				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
-			</div>
+    <!-- Reflection -->
+    <div class="minor-section">
+      <h2>Reflection</h2>
+      <p>I think my main limitation with this project was just using the common shapes in the P5 library. It's much more difficult creating a drawing with code than using traditional art and animation methods. Overall I think the experiment was super fun. If given more time and experience with the code library, I would've added more details to my art piece – such as imitating the sun beams seen in the photo and adding more reflections in the water.</p>
+    </div>
 
-			<div class="minor-section">
-				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
-			</div>
-
-		</section>
-		<nav id="links" class="minor-section">
-			<!-- Put link back to homepage here. -->
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-            </ul>
-		</nav>
-	</main>
+    <!-- Navigation -->
+    <nav id="links" class="minor-section">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </main>
 </body>
 </html>

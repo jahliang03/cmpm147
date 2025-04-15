@@ -1,79 +1,190 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+// sketch.js - beach scene setup and draw
+// Author: Jasmine Liang
+// Date: 2025-04-14
 
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
-
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
-
-// Globals
-let myInstance;
+let seed = 200;
+let sunStartTime = 0;
 let canvasContainer;
-var centerHorz, centerVert;
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
+const oceanColor = "#86a0be";
+const sandColor = "#747f89";
+const skyColor = "#b9d4ed";
+const mountainColor = "#283948";
+const sunColor = "#ffffd0";
+const cloudColor = "#f4f8f8";
+const cloudColor2 = "#afc9e1";
+const cloudColor3 = "#ffd9b0";
+const waveColor = "#b3cfec";
+const waveColor2 = "#91b8db";
+const waveColor3 = "#5c758a";
 
-    myMethod() {
-        // code to run when method is called
-    }
-}
+let cloudPositions = [];
+let cloudPositions2 = [];
+let cloudPositions3 = [];
 
-function resizeScreen() {
-  centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
-  centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
-  console.log("Resizing...");
-  resizeCanvas(canvasContainer.width(), canvasContainer.height());
-  // redrawCanvas(); // Redraw everything based on new size
-}
-
-// setup() function is called once when the program starts
 function setup() {
-  // place our canvas, making it fit our container
-  canvasContainer = $("#canvas-container");
-  let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-  canvas.parent("canvas-container");
-  // resize canvas is the page is resized
+  canvasContainer = select('#canvas-container');
+  let canvas = createCanvas(400, 200);
+  canvas.parent(canvasContainer);
 
-  // create an instance of the class
-  myInstance = new MyClass("VALUE1", "VALUE2");
-
-  $(window).resize(function() {
-    resizeScreen();
+  createButton("reimagine").parent(canvasContainer).mousePressed(() => {
+    seed++;
+    sunStartTime = millis();
+    initClouds();
   });
-  resizeScreen();
+
+  initClouds();
+  sunStartTime = millis(); // Start sun movement
 }
 
-// draw() function is called repeatedly, it's the main animation loop
 function draw() {
-  background(220);    
-  // call a method on the instance
-  myInstance.myMethod();
-
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
+  randomSeed(seed);
+  background(100);
   noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
+  fill(skyColor);
+  rect(0, 0, width, height / 2);
 
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+  drawClouds();
+
+  stroke(cloudColor3);
+  strokeWeight(2);
+  fill(sunColor);
+  let elapsed = (millis() - sunStartTime) % 20000;
+  let time = elapsed / 40000;
+  let sunY = map(time, 0, 1, height / 4, height + 50);
+  circle(width / 2, sunY, 50);
+
+  fill(sandColor);
+  rect(0, height - height / 5, width, height / 5);
+
+  drawOcean();
+
+  stroke("#ffa480");
+  strokeWeight(2);
+  fill(mountainColor);
+  beginShape();
+  vertex(0, height / 2);
+  const steps = 10;
+  for (let i = 0; i < steps + 1; i++) {
+    let x = (width * i) / steps;
+    let y = height / 2 - (random() * random() * random() * height) / 4 - height / 50;
+    vertex(x, y);
+  }
+  vertex(width, height / 2);
+  endShape(CLOSE);
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+function initClouds() {
+  cloudPositions = [];
+  cloudPositions2 = [];
+  cloudPositions3 = [];
+
+  for (let i = 0; i < 5; i++) {
+    cloudPositions.push({
+      x: random(width),
+      y: random(10, height / 4),
+      speed: random(0.2, 0.5),
+      size: random(30, 50),
+    });
+
+    cloudPositions2.push({
+      x: random(width),
+      y: random(height / 3, height / 2 - 5),
+      speed: random(0.2, 0.5),
+      size: random(50, 60),
+    });
+
+    cloudPositions3.push({
+      x: random(width),
+      y: random(height / 2 - 10, height / 2 + 10),
+      speed: random(0.15, 0.4),
+      size: random(40, 55),
+    });
+  }
+}
+
+function drawClouds() {
+  // Top Layer
+  fill(cloudColor);
+  cloudPositions.forEach(cloud => {
+    cloud.x += cloud.speed;
+    if (cloud.x > width + 60) cloud.x = -60;
+    let baseX = cloud.x, baseY = cloud.y, w = cloud.size * 2, h = cloud.size * 0.4;
+    ellipse(baseX, baseY, w, h);
+    ellipse(baseX + 20, baseY - 8, w * 0.8, h);
+    ellipse(baseX + 40, baseY + 4, w * 0.7, h);
+    ellipse(baseX - 20, baseY + 6, w * 0.6, h);
+    ellipse(baseX + 10, baseY + 10, w * 0.5, h * 0.6);
+  });
+
+  // Middle Layer
+  fill(cloudColor2);
+  cloudPositions2.forEach(cloud => {
+    cloud.x += cloud.speed;
+    if (cloud.x > width + 60) cloud.x = -60;
+    let baseX = cloud.x, baseY = cloud.y, w = cloud.size * 2, h = cloud.size * 0.5;
+    ellipse(baseX, baseY, w, h);
+    ellipse(baseX + 20, baseY - 6, w * 0.8, h * 0.8);
+    ellipse(baseX + 35, baseY + 4, w * 0.7, h * 0.7);
+    ellipse(baseX - 15, baseY + 4, w * 0.6, h * 0.7);
+  });
+
+  // Bottom Layer
+  fill(cloudColor3);
+  cloudPositions3.forEach(cloud => {
+    cloud.x += cloud.speed;
+    if (cloud.x > width + 60) cloud.x = -60;
+    let baseX = cloud.x, baseY = cloud.y, w = cloud.size * 2, h = cloud.size * 0.4;
+    ellipse(baseX, baseY, w, h);
+    ellipse(baseX + 15, baseY - 5, w * 0.8, h * 0.7);
+    ellipse(baseX + 30, baseY + 3, w * 0.7, h * 0.7);
+    ellipse(baseX - 15, baseY + 5, w * 0.6, h * 0.6);
+    ellipse(baseX + 5, baseY + 8, w * 0.5, h * 0.5);
+  });
+}
+
+function drawOcean() {
+  fill(oceanColor);
+  rect(0, height / 2, width, height / 3);
+
+  let numWaveLines = 1, waveGap = 10, waveHeight = 5;
+
+  stroke(waveColor);
+  strokeWeight(30);
+  noFill();
+  for (let j = 0; j < numWaveLines; j++) {
+    beginShape();
+    for (let x = 0; x <= width; x += 5) {
+      let angle = millis() / 2000 + x * 0.05 + j;
+      let y = (height * 5) / 7 + 20 + j * waveGap + sin(angle) * waveHeight;
+      vertex(x, y);
+    }
+    endShape();
+  }
+
+  stroke(waveColor2);
+  strokeWeight(20);
+  for (let j = 0; j < numWaveLines; j++) {
+    beginShape();
+    for (let x = 0; x <= width; x += 5) {
+      let angle = millis() / -2000 + x * 0.05 + j;
+      let y = (height * 4.5) / 7 + 20 + j * waveGap + sin(angle) * waveHeight;
+      vertex(x, y);
+    }
+    endShape();
+  }
+
+  stroke(waveColor3);
+  strokeWeight(18);
+  waveHeight = 3;
+  for (let j = 0; j < numWaveLines; j++) {
+    beginShape();
+    for (let x = 0; x <= width; x += 5) {
+      let angle = millis() / 2000 + x * 0.05 + j;
+      let y = (height * 3) / 7 + 20 + j * waveGap + sin(angle) * waveHeight;
+      vertex(x, y);
+    }
+    endShape();
+  }
+  noStroke();
 }
