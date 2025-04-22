@@ -9,11 +9,110 @@
   <link rel="stylesheet" type="text/css" href="../css/site.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 
-  <!-- Required Libraries -->
+  <!-- Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
-
-  <!-- Your Sketch -->
   <script src="./js/sketch.js" defer></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    h1, h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    .minor-section {
+      margin-bottom: 2rem;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .world-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+
+    .world-row {
+      display: 16px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .world-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .canvas-box {
+      border: 2px solid #ccc;
+      background-color: #eee;
+      padding: 4px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      width: fit-content;
+      height: fit-content;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .controls button {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      width: 320px;
+      height: 320px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      resize: none;
+    }
+
+    .fullscreen-box {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 0.5rem 0;
+    }
+
+    nav ul li a {
+      color: #007acc;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,27 +120,38 @@
     <section>
       <h1>Experiment 3 - Procedural Tilemap</h1>
 
-      <div class="minor-section">
-        <div class="minor-section">
-          <h2>Overworld</h2>
-          <div id="canvas-container-1"></div>
-          <button id="reseedButton1">Reseed Overworld</button>
-          <span id="seedReport1"></span>
-          <textarea id="asciiBox1" cols="20" rows="20" style="width: 320px; font-family: monospace;"></textarea>
-        
-          <h2>Dungeon</h2>
-          <div id="canvas-container-2"></div>
-          <button id="reseedButton2">Reseed Dungeon</button>
-          <span id="seedReport2"></span>
-          <textarea id="asciiBox2" cols="20" rows="20" style="width: 320px; font-family: monospace;"></textarea>
-        </div>
-        
-
-        <div class="fullscreen-box">
-          <button id="toggle-fullscreen">Fullscreen</button>
+      <!-- Overworld -->
+      <div class="minor-section world-section">
+        <h2>Overworld</h2>
+        <div class="world-row">
+          <div class="canvas-box" id="canvas-container-1"></div>
+          <div class="controls">
+            <button id="reseedButton1">Reseed Overworld</button>
+            <span id="seedReport1"></span>
+            <textarea id="asciiBox1"></textarea>
+          </div>
         </div>
       </div>
 
+      <!-- Dungeon -->
+      <div class="minor-section world-section">
+        <h2>Dungeon</h2>
+        <div class="world-row">
+          <div class="canvas-box" id="canvas-container-2"></div>
+          <div class="controls">
+            <button id="reseedButton2">Reseed Dungeon</button>
+            <span id="seedReport2"></span>
+            <textarea id="asciiBox2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fullscreen Toggle -->
+      <div class="fullscreen-box">
+        <button id="toggle-fullscreen">Fullscreen</button>
+      </div>
+
+      <!-- Writeup Sections -->
       <div class="minor-section">
         <h2>Description</h2>
         <p>What are you trying to accomplish with this experiment?</p>
@@ -58,6 +168,7 @@
       </div>
     </section>
 
+    <!-- Navigation -->
     <nav id="links" class="minor-section">
       <ul>
         <li><a href="../index.html">Home</a></li>
