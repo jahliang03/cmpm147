@@ -73,10 +73,9 @@ function generateOverworld(cols, rows) {
   let startY = Math.floor(Math.random() * (rows - roomHeight));
   for (let i = startY; i < startY + roomHeight; i++) {
     for (let j = startX; j < startX + roomWidth; j++) {
-      if (Math.random() > 0.2) grid[i][j] = "W";
+      if (Math.random() > 0.3) grid[i][j] = "W";
     }
   }
-
   return grid;
 }
 
@@ -86,17 +85,42 @@ function drawGridOverworld(p, grid) {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       let code = grid[i][j];
+
       if (code === "G") {
         placeTile(p, i, j, 1, 0);
-      } else if (code === "T") {
+
+        // Animate shadow
+        let shadow = p.map(p.noise(i * 0.1, j * 0.1, p.millis() / 3000), 0, 1, 0, 80);
+        p.fill(0, 0, 0, shadow); // semi-transparent dark overlay
+        p.rect(j * 16, i * 16, 16, 16);
+
+        // Animate brightness (sunlight flicker)
+        let brightness = p.map(p.noise(i * 0.1, j * 0.1, p.millis() / 5000), 0, 1, 0, 60);
+        p.fill(255, 255, 200, brightness); // soft yellow-white highlight
+        p.rect(j * 16, i * 16, 16, 16);
+      }
+
+      else if (code === "T") {
         placeTile(p, i, j, 15, 0);
-      } else if (code === "W") {
+      }
+
+      else if (code === "W") {
         placeTile(p, i, j, 1, 13);
         drawWaterEdge(p, grid, i, j);
       }
     }
   }
 }
+function drawWaterEdge(p, grid, i, j) {
+  const isWater = (x, y) =>
+    x >= 0 && x < grid.length && y >= 0 && y < grid[0].length && grid[x][y] === "W";
+
+  if (!isWater(i - 1, j)) placeTile(p, i, j, 10, 0); // top edge
+  if (!isWater(i, j + 1)) placeTile(p, i, j, 11, 1); // right edge
+  if (!isWater(i + 1, j)) placeTile(p, i, j, 10, 2); // bottom edge
+  if (!isWater(i, j - 1)) placeTile(p, i, j, 9, 1); // left edge
+}
+
 
 // === DUNGEON ===
 const dungeon = (p) => {
@@ -169,15 +193,37 @@ function drawGridDungeon(p, grid) {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       let code = grid[i][j];
-      if (code === "G") placeTile(p, i, j, 11, 23);
-      else if (code === "T") placeTile(p, i, j, 15, 25);
+      if (code === "G"){
+        placeTile(p, i, j, 11, 23);
+        // Animate shadow
+        let shadow = p.map(p.noise(i * 0.4, j * 0.4, p.millis() / 3000), 0, 1, 0, 80);
+        p.fill(0, 0, 0, shadow); // semi-transparent dark overlay
+        p.rect(j * 30, i * 30, 30, 30);
+
+      }
+
+      else if (code === "T"){
+         placeTile(p, i, j, 15, 25);
+      }
       else if (code === "W") {
-        placeTile(p, i, j, 23, 25);
-        drawWaterEdge(p, grid, i, j);
+        placeTile(p, i, j, 30, 25);
+        drawPathEdge(p, grid, i, j);
       }
     }
   }
 }
+
+function drawPathEdge(p, grid, i, j) {
+  const isWater = (x, y) =>
+    x >= 0 && x < grid.length && y >= 0 && y < grid[0].length && grid[x][y] === "W";
+
+  // These tile coordinates should point to *subtle* dungeon edges, not green-highlighted ones.
+  if (!isWater(i - 1, j)) placeTile(p, i, j, 16, 21); // top edge
+  if (!isWater(i, j + 1)) placeTile(p, i, j, 17, 22); // right edge
+  if (!isWater(i + 1, j)) placeTile(p, i, j, 16, 23); // bottom edge
+  if (!isWater(i, j - 1)) placeTile(p, i, j, 15, 22); // left edge
+}
+
 
 new p5(overworld);
 new p5(dungeon);
