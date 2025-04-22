@@ -118,11 +118,11 @@
 <body>
   <main id="content">
     <section>
-      <h1>Experiment 3 - Procedural Tilemap</h1>
+      <h1>Experiment 3 - Alternate Worlds </h1>
 
       <!-- Overworld -->
       <div class="minor-section world-section">
-        <h2>Overworld</h2>
+        <h2><b>Overworld</b></h2>
         <div class="world-row">
           <div class="canvas-box" id="canvas-container-1"></div>
           <div class="controls">
@@ -135,7 +135,7 @@
 
       <!-- Dungeon -->
       <div class="minor-section world-section">
-        <h2>Dungeon</h2>
+        <h2><b>Dungeon</b></h2>
         <div class="world-row">
           <div class="canvas-box" id="canvas-container-2"></div>
           <div class="controls">
@@ -154,17 +154,23 @@
       <!-- Writeup Sections -->
       <div class="minor-section">
         <h2>Description</h2>
-        <p>What are you trying to accomplish with this experiment?</p>
+        <p>For this experiment, I set out to create two distinct procedural worlds—an overworld and a dungeon.
+           I used noise-based generation techniques along with a provided tilemap to differentiate the two environments. 
+           By customizing the generation logic and tile placement, I was able to give each world its own visual identity and structure.
+        </p>
+
       </div>
 
       <div class="minor-section">
         <h2>Technical</h2>
-        <p>Describe in detail what you did technically and how it works.</p>
+        <p>The overworld uses Perlin noise to generate natural terrain variation like grass, trees, and water, with animated lighting effects that simulate life over time. The dungeon also utilizes noise for the shadows and lighting effect. It also 
+          features a snake-like path generation algorithm with randomly placed rooms connected to the paths and uses bitmasking for smooth tile transitions.
+           Both worlds are built on a grid system, support reseeding for randomness, and map character codes to tiles using a shared rendering function..</p>
       </div>
 
       <div class="minor-section">
         <h2>Reflection</h2>
-        <p>Each person that worked on the code should reflect on the process, difficulties, and successes.</p>
+        <p>I think the largest drawback I had with this assingment was getting the coordinates for the tilemap and autotailing. It truly felt like an intricate process as I spent so much time trying to meticulously match the coordinates of the assets with the placement of how I wanted my worlds.</p>
       </div>
     </section>
 
