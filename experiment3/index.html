@@ -22,22 +22,20 @@
       <h1>Experiment 3 - Procedural Tilemap</h1>
 
       <div class="minor-section">
-        <div id="canvas-container">
-          <!-- canvas injected here -->
+        <div class="minor-section">
+          <h2>Overworld</h2>
+          <div id="canvas-container-1"></div>
+          <button id="reseedButton1">Reseed Overworld</button>
+          <span id="seedReport1"></span>
+          <textarea id="asciiBox1" cols="20" rows="20" style="width: 320px; font-family: monospace;"></textarea>
+        
+          <h2>Dungeon</h2>
+          <div id="canvas-container-2"></div>
+          <button id="reseedButton2">Reseed Dungeon</button>
+          <span id="seedReport2"></span>
+          <textarea id="asciiBox2" cols="20" rows="20" style="width: 320px; font-family: monospace;"></textarea>
         </div>
-
-        <!-- Controls and Output -->
-        <div style="margin: 10px 0;">
-          <button id="reseedButton">Reseed</button>
-          <span id="seedReport"></span>
-        </div>
-
-        <textarea 
-          cols="20" 
-          rows="20" 
-          id="asciiBox" 
-          style="opacity: 0.5; letter-spacing: 1ex; width: 320px; margin: 10px; font-family: monospace;">
-        </textarea>
+        
 
         <div class="fullscreen-box">
           <button id="toggle-fullscreen">Fullscreen</button>
