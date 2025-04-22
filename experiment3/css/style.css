@@ -17,3 +17,27 @@ body {
     width: 100%;
     height: 600px;
 }
+.visual-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+  
+  .canvas-box {
+    width: 400px;
+    height: 400px;
+    background-color: #ccc;
+    border: 2px solid #666;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  }
+  
+  .my-photo {
+    display: block;
+    margin: 2rem auto;
+    max-width: 300px;
+    height: auto;
+  }
+  
+  
