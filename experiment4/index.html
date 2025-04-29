@@ -1,98 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Experiment 4 - Procedural Tilemap</title>
   <meta charset="UTF-8" />
+  <title>Experiment 4 - Hitachi Seaside Park</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Stylesheets -->
-  <link rel="stylesheet" type="text/css" href="../css/site.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-
-  <!-- Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
-  <script src="./js/sketch.js" defer></script>
 
   <style>
     body {
       font-family: "Segoe UI", sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #eef6ff;
       color: #333;
     }
 
-    h1, h2 {
-      margin-bottom: 0.5rem;
-    }
-
     main {
-      max-width: 1000px;
+      max-width: 960px;
       margin: auto;
       padding: 2rem;
     }
 
-    .minor-section {
-      margin-bottom: 2rem;
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    }
-
-    .world-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-
-    .world-row {
-      display: 16px;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .world-row {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .canvas-box {
-      border: 2px solid #ccc;
-      background-color: #eee;
-      padding: 4px;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      width: fit-content;
-      height: fit-content;
-    }
-    .controls {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .controls button {
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-    }
-
-    textarea {
-      width: 320px;
-      height: 320px;
-      font-family: monospace;
-      font-size: 0.85rem;
-      resize: none;
-    }
-
-    .fullscreen-box {
+    h1 {
       text-align: center;
-      margin-top: 1rem;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    #container {
+      background: #ffffff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .minor-section {
+      background: #ffffff;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      margin-top: 2rem;
+      text-align: center;
     }
 
     nav ul {
@@ -116,80 +78,78 @@
 </head>
 
 <body>
-  <main id="content">
-    <section>
-      <h1>Experiment 3 - Alternate Worlds </h1>
+  <main>
+    <h1>Experiment 4 - Infinite Worlds </h1>
 
-      <!-- blue flower field -->
-      <div class="minor-section world-section">
-        <h2><b>Overworld</b></h2>
-        <div class="world-row">
-          <div class="canvas-box" id="canvas-container-1">
-            <iframe 
-              src="https://hitachiseasidepark.glitch.me" 
-              width="600" 
-              height="600" 
-              style="border: none; border-radius: 8px;">
-            </iframe>
-          </div>
-          
-          </div>
-        </div>
-      </div>
-      <div class="controls">
-        <input id="seedInput1" placeholder="Enter World Key" />
-        <button id="reseedButton1">Reseed Overworld</button>
-      </div>
-      
-
-      <!-- lotus pond -->
-      <div class="minor-section world-section">
-        <h2><b>Dungeon</b></h2>
-        <div class="world-row">
-          <div class="canvas-box" id="canvas-container-2"></div>
-          <div class="controls">
-            <button id="reseedButton2">Reseed Dungeon</button>
-            <span id="seedReport2"></span>
-            <textarea id="asciiBox2"></textarea>
-          </div>
-        </div>
-      </div>
-
-      <!-- Fullscreen Toggle -->
-      <div class="fullscreen-box">
-        <button id="toggle-fullscreen">Fullscreen</button>
-      </div>
-
-      <!-- Writeup Sections -->
-      <div class="minor-section">
-        <h2>Description</h2>
-        <p>For this experiment, I set out to create two distinct procedural worlds—an overworld and a dungeon.
-           I used noise-based generation techniques along with a provided tilemap to differentiate the two environments. 
-           By customizing the generation logic and tile placement, I was able to give each world its own visual identity and structure.
-        </p>
-
-      </div>
-
-      <div class="minor-section">
-        <h2>Technical</h2>
-        <p>The overworld uses Perlin noise to generate natural terrain variation like grass, trees, and water, with animated lighting effects that simulate life over time. The dungeon also utilizes noise for the shadows and lighting effect. It also 
-          features a snake-like path generation algorithm with randomly placed rooms connected to the paths and uses bitmasking for smooth tile transitions.
-           Both worlds are built on a grid system, support reseeding for randomness, and map character codes to tiles using a shared rendering function..</p>
-      </div>
-
-      <div class="minor-section">
-        <h2>Reflection</h2>
-        <p>I think the largest drawback I had with this assingment was getting the coordinates for the tilemap and autotailing. It truly felt like an intricate process as I spent so much time trying to meticulously match the coordinates of the assets with the placement of how I wanted my worlds.
-          Since the overworld is a natural environment, I wanted my draw functions to generate more organic shapes for the bodies of water which resulted in more randomization and reliance on noise for the code. As for the dungeon, since it's a man-made structure
-          , I had to set more boundaries within the code such as a defining start and end points across the screen and more specification on the paths height and width. I also had the doors only spawn where the paths lead while the trees were more scattered in generation in wht overworld. 
-        </p>
-      </div>
+    <div id="container1">
+      <iframe src="https://hitachiseasidepark.glitch.me" title="Hitachi Seaside Park Project" allowfullscreen></iframe>
+    </div>
     </section>
 
-    <!-- Navigation -->
-    <nav id="links" class="minor-section">
+    <div id="container2">
+      <iframe src="https://lotuspond.glitch.me" title="Hitachi Seaside Park Project" allowfullscreen></iframe>
+    </div>
+    <section class="minor-section">
+
+      <div id="container3">
+        <iframe src="https://earthland.glitch.me" title="Hitachi Seaside Park Project" allowfullscreen></iframe>
+      </div>
+      <section class="minor-section">
+        
+
+      <h2>Description</h2>
+      <p>
+        For this experiment, I created three generative worlds. 
+        
+        The first is a flower field inspired by Hitachi Seaside Park. 
+        The project uses word-based seeds to generate different landscapes, filled with clusters of flowers 
+        scattered across a stylized, scrolling environment. Players can explore the world with the arrow keys, 
+        and clicking plants a new flower wherever they click. A bee cursor follows the player’s mouse movement to helpe
+        pollinate the blue tiles that represent flowers. 
+
+        For my lotus pond world the format of the scroll is the same but the scene features procedurally placed lotus flowers, lilypads, 
+        and subtle water ripples with the square tiles, evoking the calmness of a natural pond. The color palette emphasizes soft pastels and 
+        gentle movement to enhance the relaxing atmosphere. It also makes use of the bee cursor to help grow the lotus leaves. The world makes use of different shapes 
+        and customized flowers. 
+
+        The earthland world plays around with different terrain. The tree can only be planted where there's land and soil. It can't be planted in water. It plays around with terrain 
+        and the ellipses shape was used to generate the plots of terrain.
+      </p>
+    </section>
+
+    <section class="minor-section">
+      <h2>Technical</h2>
+      <p>
+        The flower world uses Perlin noise to determine where flowers are placed across a large grid-based landscape.Flowers and ground circles are layered using simple ellipse 
+        shapes to recreate the shapes of the flower field. Clicking on the world plants a new flower at the clicked location, and a custom bee cursor follows the player’s mouse 
+        for an extra fun touch. 
+
+        The lotus pond is built using noise-based placement algorithms, creating organic, clustered patterns for lilypads and flowers. 
+        Ripples are simulated through animated Perlin noise, and layered transparency effects create depth on the water's surface. 
+        The environment refreshes procedurally each time a new seed is entered.
+
+        Terrain is generated using Perlin noise, assigning elevation-based biomes like water, grassland, forest, and hills. 
+        Soft-edged elliptical tiles convey organic terrain, and tree planting is tracked in a map keyed by tile coordinates. 
+        Trees appear with layered triangles for a stylized pine effect, and interaction is limited to valid terrain zones.
+      </p>
+    </section>
+
+    <section class="minor-section">
+      <h2>Reflection</h2>
+      <p>
+        For this set of experiments, I created three different procedural worlds, each exploring a different mood and style. The lotus pond world focuses on subtle motion and peaceful atmosphere, 
+        with lilypads and flowers gently scattered across a rippling pond. Earthland generates a large-scale natural environment with terrain types like grassland, forests, hills, and mountains, 
+        allowing players to plant trees and gradually shape the world. The Hitachi Seaside Park project brings a colorful flower field to life, using scrolling camera movement, a playful bee cursor, 
+        and interactive flower planting based on word-seeded generation. Together, these worlds show how procedural systems can create living, responsive environments through different types of noise, 
+        tile rendering, and player interaction. Playing around with the three worlds definitely gave me a better understanding of shapes within the P5 library and how these projections can be angled
+        and altered to create an open world. The base of the code I used was rather simple so I didn't have much trouble altering it to work for each differnt iteration. The most issue's I had was 
+        simply readjusting the code to work in the sketch.js environment. 
+      </p>
+    </section>
+
+    <nav>
       <ul>
-        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html">Back to Home</a></li>
       </ul>
     </nav>
   </main>

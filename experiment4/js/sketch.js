@@ -1,78 +1,79 @@
-"use strict";
+// sketch.js - purpose and description here
+// Author: Your Name
+// Date:
 
-/* global XXH */
+// Here is how you might set up an OOP p5.js project
+// Note that p5.js looks for a file called sketch.js
 
-let worldSeed1;
-let canvas1;
-let flowerColors = [];
-let numCols1 = 32;
-let numRows1 = 32;
-let grid1 = [];
+// Constants - User-servicable parts
+// In a longer project I like to put these in a separate file
+const VALUE1 = 1;
+const VALUE2 = 2;
 
+// Globals
+let myInstance;
+let canvasContainer;
+var centerHorz, centerVert;
+
+class MyClass {
+    constructor(param1, param2) {
+        this.property1 = param1;
+        this.property2 = param2;
+    }
+
+    myMethod() {
+        // code to run when method is called
+    }
+}
+
+function resizeScreen() {
+  centerHorz = canvasContainer.width() / 2; // Adjusted for drawing logic
+  centerVert = canvasContainer.height() / 2; // Adjusted for drawing logic
+  console.log("Resizing...");
+  resizeCanvas(canvasContainer.width(), canvasContainer.height());
+  // redrawCanvas(); // Redraw everything based on new size
+}
+
+// setup() function is called once when the program starts
 function setup() {
-  // Canvas 1 - attach to #canvas-container-1
-  canvas1 = createCanvas(512, 512);
-  canvas1.parent("canvas-container-1");
+  // place our canvas, making it fit our container
+  canvasContainer = $("#canvas-container");
+  let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
+  canvas.parent("canvas-container");
+  // resize canvas is the page is resized
 
-  // Predefine flower colors
-  flowerColors = [
-    color(140, 190, 255),
-    color(160, 210, 255),
-    color(180, 220, 255),
-    color(120, 170, 230),
-    color(100, 160, 220),
-    color(80, 140, 200)
-  ];
+  // create an instance of the class
+  myInstance = new MyClass("VALUE1", "VALUE2");
 
-  // Start with default world key
-  worldKeyChanged1("default");
-
-  // Hook reseed button
-  select("#reseedButton1").mousePressed(() => {
-    let newKey = select("#seedInput1").value(); // Now from separate input box
-    worldKeyChanged1(newKey);
+  $(window).resize(function() {
+    resizeScreen();
   });
-
-  noLoop(); // Only draw when world changes
+  resizeScreen();
 }
 
+// draw() function is called repeatedly, it's the main animation loop
 function draw() {
-  background(180, 220, 255);
-  drawWorld1();
+  background(220);    
+  // call a method on the instance
+  myInstance.myMethod();
+
+  // Set up rotation for the rectangle
+  push(); // Save the current drawing context
+  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
+  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
+  fill(234, 31, 81);
+  noStroke();
+  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
+  pop(); // Restore the original drawing context
+
+  // The text is not affected by the translate and rotate
+  fill(255);
+  textStyle(BOLD);
+  textSize(140);
+  text("p5*", centerHorz - 105, centerVert + 40);
 }
 
-function worldKeyChanged1(key) {
-  worldSeed1 = XXH.h32(key, 0);
-  noiseSeed(worldSeed1);
-  randomSeed(worldSeed1);
-
-  generateWorld1();
-  redraw();
-}
-
-function generateWorld1() {
-  grid1 = [];
-  for (let y = 0; y < numRows1; y++) {
-    let row = [];
-    for (let x = 0; x < numCols1; x++) {
-      let n = noise(x * 0.1, y * 0.1);
-      row.push(n > 0.55 ? "F" : ".");
-    }
-    grid1.push(row);
-  }
-}
-
-function drawWorld1() {
-  let tileW = width / numCols1;
-  let tileH = height / numRows1;
-
-  for (let y = 0; y < numRows1; y++) {
-    for (let x = 0; x < numCols1; x++) {
-      if (grid1[y][x] === "F") {
-        fill(random(flowerColors));
-        noStroke();
-        ellipse(x * tileW + tileW / 2, y * tileH + tileH / 2, tileW * 0.7, tileH * 0.7);
-      }
-    }
-  }
+// mousePressed() function is called once after every time a mouse button is pressed
+function mousePressed() {
+    // code to run when mouse is pressed
 }
