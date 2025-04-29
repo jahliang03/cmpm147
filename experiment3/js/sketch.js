@@ -121,7 +121,6 @@ function drawWaterEdge(p, grid, i, j) {
   if (!isWater(i, j - 1)) placeTile(p, i, j, 9, 1); // left edge
 }
 
-
 // === DUNGEON ===
 const dungeon = (p) => {
   let grid = [], seed = 0, numCols = 20, numRows = 20;

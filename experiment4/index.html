@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Experiment 4 - Procedural Tilemap</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" type="text/css" href="../css/site.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+  <script src="./js/sketch.js" defer></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    h1, h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    .minor-section {
+      margin-bottom: 2rem;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .world-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+
+    .world-row {
+      display: 16px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .world-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .canvas-box {
+      border: 2px solid #ccc;
+      background-color: #eee;
+      padding: 4px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      width: fit-content;
+      height: fit-content;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .controls button {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    textarea {
+      width: 320px;
+      height: 320px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      resize: none;
+    }
+
+    .fullscreen-box {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 0.5rem 0;
+    }
+
+    nav ul li a {
+      color: #007acc;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <main id="content">
+    <section>
+      <h1>Experiment 3 - Alternate Worlds </h1>
+
+      <!-- blue flower field -->
+      <div class="minor-section world-section">
+        <h2><b>Overworld</b></h2>
+        <div class="world-row">
+          <div class="canvas-box" id="canvas-container-1">
+            <iframe 
+              src="https://hitachiseasidepark.glitch.me" 
+              width="600" 
+              height="600" 
+              style="border: none; border-radius: 8px;">
+            </iframe>
+          </div>
+          
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <input id="seedInput1" placeholder="Enter World Key" />
+        <button id="reseedButton1">Reseed Overworld</button>
+      </div>
+      
+
+      <!-- lotus pond -->
+      <div class="minor-section world-section">
+        <h2><b>Dungeon</b></h2>
+        <div class="world-row">
+          <div class="canvas-box" id="canvas-container-2"></div>
+          <div class="controls">
+            <button id="reseedButton2">Reseed Dungeon</button>
+            <span id="seedReport2"></span>
+            <textarea id="asciiBox2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fullscreen Toggle -->
+      <div class="fullscreen-box">
+        <button id="toggle-fullscreen">Fullscreen</button>
+      </div>
+
+      <!-- Writeup Sections -->
+      <div class="minor-section">
+        <h2>Description</h2>
+        <p>For this experiment, I set out to create two distinct procedural worlds—an overworld and a dungeon.
+           I used noise-based generation techniques along with a provided tilemap to differentiate the two environments. 
+           By customizing the generation logic and tile placement, I was able to give each world its own visual identity and structure.
+        </p>
+
+      </div>
+
+      <div class="minor-section">
+        <h2>Technical</h2>
+        <p>The overworld uses Perlin noise to generate natural terrain variation like grass, trees, and water, with animated lighting effects that simulate life over time. The dungeon also utilizes noise for the shadows and lighting effect. It also 
+          features a snake-like path generation algorithm with randomly placed rooms connected to the paths and uses bitmasking for smooth tile transitions.
+           Both worlds are built on a grid system, support reseeding for randomness, and map character codes to tiles using a shared rendering function..</p>
+      </div>
+
+      <div class="minor-section">
+        <h2>Reflection</h2>
+        <p>I think the largest drawback I had with this assingment was getting the coordinates for the tilemap and autotailing. It truly felt like an intricate process as I spent so much time trying to meticulously match the coordinates of the assets with the placement of how I wanted my worlds.
+          Since the overworld is a natural environment, I wanted my draw functions to generate more organic shapes for the bodies of water which resulted in more randomization and reliance on noise for the code. As for the dungeon, since it's a man-made structure
+          , I had to set more boundaries within the code such as a defining start and end points across the screen and more specification on the paths height and width. I also had the doors only spawn where the paths lead while the trees were more scattered in generation in wht overworld. 
+        </p>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <nav id="links" class="minor-section">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </main>
+</body>
+</html>
